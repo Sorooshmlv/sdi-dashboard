@@ -17,7 +17,7 @@ export default async function handler(
 
   try {
     await rateLimiter.consume(ip); // هر درخواست یک امتیاز مصرف می‌کنه
-  } catch (_err) {
+  } catch {
     return res
       .status(429)
       .json({ error: "Too many requests. لطفا بعدا تلاش کنید." });
