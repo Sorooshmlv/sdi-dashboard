@@ -6,10 +6,7 @@ const rateLimiter = new RateLimiterMemory({
   duration: 60,
 });
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { path: string[] } }
-) {
+export async function GET(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") ?? "";
 
   try {
@@ -18,7 +15,8 @@ export async function GET(
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
-  const path = params.path.join("/");
+  // ✅ مسیر رو از /api/ ببُر
+  const path = req.nextUrl.pathname.replace(/^\/api\/?/, "");
   const targetUrl = `http://localhost:8080/FROST-Server/v1.0/${path}${req.nextUrl.search}`;
 
   const res = await fetch(targetUrl, {
@@ -29,10 +27,7 @@ export async function GET(
   return new NextResponse(data, { status: res.status });
 }
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { path: string[] } }
-) {
+export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") ?? "";
 
   try {
@@ -41,7 +36,8 @@ export async function POST(
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
-  const path = params.path.join("/");
+  // ✅ مسیر رو از /api/ ببُر
+  const path = req.nextUrl.pathname.replace(/^\/api\/?/, "");
   const targetUrl = `http://localhost:8080/FROST-Server/v1.0/${path}${req.nextUrl.search}`;
 
   const res = await fetch(targetUrl, {
