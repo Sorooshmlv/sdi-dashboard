@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
   }
 
   const url = `http://localhost:8080${req.nextUrl.pathname.replace(
-    "/api/proxy",
+    "/api",
     ""
   )}${req.nextUrl.search}`;
 
