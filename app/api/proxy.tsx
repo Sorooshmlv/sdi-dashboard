@@ -17,7 +17,7 @@ export default async function handler(
 
   try {
     await rateLimiter.consume(ip); // هر درخواست یک امتیاز مصرف می‌کنه
-  } catch (err) {
+  } catch (_err) {
     return res
       .status(429)
       .json({ error: "Too many requests. لطفا بعدا تلاش کنید." });
@@ -29,7 +29,7 @@ export default async function handler(
   }
 
   const url = `http://localhost:8080${
-    req.url?.replace("/api/ّproxy", "") || ""
+    req.url?.replace("/api/proxy", "") || ""
   }`;
 
   const headers: Record<string, string> = {};
