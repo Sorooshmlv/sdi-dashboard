@@ -5,12 +5,12 @@ import { getLocation } from './api/location'
 import { getHumidity } from './api/Humidity'
 
 export default function Home() {
-  const { data: temperature } = useSwr(['Observations/'], ([url]) =>
+  const { data: temperature } = useSwr(['Observations/'], () =>
     getObservation()
   )
-  const { data: location } = useSwr(['Locations/'], ([url]) => getLocation())
-  const { data: humidity } = useSwr(['Humidity/'], ([url]) => getHumidity())
-  console.log(location?.data?.at(0))
+  const { data: location } = useSwr(['Locations/'], () => getLocation())
+  const { data: humidity } = useSwr(['Humidity/'], () => getHumidity())
+
   return (
     <section className='w-full h-full flex flex-col gap-8 tablet:gap-10 justify-center items-center p-4'>
       <div className='w-full max-w-md border rounded-2xl bg-[#0e0e0e] shadow-[0_0_20px_3px_rgba(255,0,0,0.4)] p-6 text-center'>
