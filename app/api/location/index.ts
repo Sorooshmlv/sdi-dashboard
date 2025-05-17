@@ -38,7 +38,7 @@ export const getLocation = async () => {
       data: result,
       error: false
     }
-  } catch (err) {
+  } catch {
     return {
       data: null,
       error: true
