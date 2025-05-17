@@ -14,14 +14,14 @@ export default function Home() {
   return (
     <section className='w-full h-full flex flex-col gap-8 tablet:gap-10 justify-center items-center p-4'>
       <div className='w-full max-w-md border rounded-2xl bg-[#0e0e0e] shadow-[0_0_20px_3px_rgba(255,0,0,0.4)] p-6 text-center'>
-        {temperature !== null ? (
+        {temperature !== null && undefined ? (
           <p>Temperature: {temperature?.data}°C</p>
         ) : (
           <p>Loading...</p>
         )}
       </div>
       <div className='w-full max-w-md border rounded-2xl bg-[#0e0e0e] shadow-[0_0_20px_3px_rgba(0,0,255,0.2)] p-6 text-center'>
-        {humidity !== null ? (
+        {humidity !== null && undefined ? (
           <p>Humidity: {humidity?.data}%</p>
         ) : (
           <p>Loading...</p>
@@ -29,7 +29,7 @@ export default function Home() {
       </div>
 
       <div className='w-full max-w-md border rounded-2xl bg-[#0e0e0e] shadow-[0_0_20px_3px_rgba(0,255,0,0.3)] p-6 text-center'>
-        {location !== null ? (
+        {location !== null && undefined ? (
           <p>
             {'Location: ' +
               '  ' +
