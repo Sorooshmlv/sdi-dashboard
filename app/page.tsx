@@ -1,31 +1,48 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client'
+import useSwr from 'swr'
+import { getObservation } from './api/observation'
+import { getLocation } from './api/location'
+import { getHumidity } from './api/Humidity'
 
 export default function Home() {
-  const [temperature, setTemperature] = useState(null);
-
-  useEffect(() => {
-    fetch("/api/getTemperature")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          setTemperature(data.result);
-        } else {
-          console.error("No temperature data found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
-
+  const { data: temperature } = useSwr(['Observations/'], ([url]) =>
+    getObservation()
+  )
+  const { data: location } = useSwr(['Locations/'], ([url]) => getLocation())
+  const { data: humidity } = useSwr(['Humidity/'], ([url]) => getHumidity())
+  console.log(location?.data?.at(0))
   return (
-    <div>
-      {temperature !== null ? (
-        <p>Current Temperature: {temperature}°C</p>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  );
+    <section className='w-full h-full flex flex-col gap-8 tablet:gap-10 justify-center items-center p-4'>
+      <div className='w-full max-w-md border rounded-2xl bg-[#0e0e0e] shadow-[0_0_20px_3px_rgba(255,0,0,0.4)] p-6 text-center'>
+        {temperature !== null ? (
+          <p>Temperature: {temperature?.data}°C</p>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+      <div className='w-full max-w-md border rounded-2xl bg-[#0e0e0e] shadow-[0_0_20px_3px_rgba(0,0,255,0.2)] p-6 text-center'>
+        {humidity !== null ? (
+          <p>Humidity: {humidity?.data}%</p>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+
+      <div className='w-full max-w-md border rounded-2xl bg-[#0e0e0e] shadow-[0_0_20px_3px_rgba(0,255,0,0.3)] p-6 text-center'>
+        {location !== null ? (
+          <p>
+            {'Location: ' +
+              '  ' +
+              'X: ' +
+              location?.data?.at(0) +
+              '  ' +
+              'Y: ' +
+              location?.data?.at(1)}
+          </p>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+    </section>
+  )
 }
