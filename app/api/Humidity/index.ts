@@ -22,7 +22,7 @@ export const getHumidity = async () => {
 
   try {
     const res = await Api<GetHumidityResponse>(
-      `${baseUrl}/Datastreams(2)/Observations?$orderby=phenomenonTime desc&$top=1`,
+      `${baseUrl}/Datastreams(4)/Observations?$orderby=phenomenonTime desc&$top=1`,
       {
         headers: {
           Authorization: basicAuth

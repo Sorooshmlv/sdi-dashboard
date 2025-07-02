@@ -22,7 +22,7 @@ export const getObservation = async () => {
 
   try {
     const res = await Api<GetObservationResponse>(
-      `${baseUrl}/Datastreams(1)/Observations?$orderby=phenomenonTime desc&$top=1`,
+      `${baseUrl}/Datastreams(3)/Observations?$orderby=phenomenonTime desc&$top=1`,
       {
         headers: {
           Authorization: basicAuth
