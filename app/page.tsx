@@ -1,10 +1,32 @@
 'use client'
 import useSwr from 'swr'
 import { getTemperature } from './api/Temperature'
-import { getLocation } from './api/location'
 import { getHumidity } from './api/Humidity'
 import { getLight } from './api/Light'
 import { getGas } from './api/Gas'
+import { getLocation } from './api/location'
+
+const shadows = [
+  'shadow-[0_0_15px_2px_rgba(255,0,0,0.4)]',
+  'shadow-[0_0_15px_2px_rgba(0,0,255,0.4)]',
+  'shadow-[0_0_15px_2px_rgba(0,255,0,0.4)]',
+  'shadow-[0_0_15px_2px_rgba(255,165,0,0.4)]',
+  'shadow-[0_0_15px_2px_rgba(255,20,147,0.4)]',
+  'shadow-[0_0_15px_2px_rgba(0,255,255,0.4)]',
+  'shadow-[0_0_15px_2px_rgba(75,0,130,0.4)]', // بنفش اصلاح شده
+  'shadow-[0_0_15px_2px_rgba(255,255,0,0.4)]'
+]
+
+const textColors = [
+  'text-[rgba(255,0,0,0.6)]',
+  'text-[rgba(0,0,255,0.6)]',
+  'text-[rgba(0,255,0,0.6)]',
+  'text-[rgba(255,165,0,0.6)]',
+  'text-[rgba(255,20,147,0.6)]',
+  'text-[rgba(0,255,255,0.6)]',
+  'text-[rgba(75,0,130,0.6)]', // بنفش اصلاح شده
+  'text-[rgba(255,255,0,0.6)]'
+]
 
 const sensors = [
   { label: 'Temperature 1', fetcher: getTemperature, id: 3, unit: '°C' },
@@ -17,38 +39,21 @@ const sensors = [
   { label: 'Gas 2', fetcher: getGas, id: 10, unit: 'ppm' }
 ]
 
-const shadows = [
-  'shadow-[0_0_15px_2px_rgba(255,0,0,0.4)]',
-  'shadow-[0_0_15px_2px_rgba(0,0,255,0.4)]',
-  'shadow-[0_0_15px_2px_rgba(0,255,0,0.4)]',
-  'shadow-[0_0_15px_2px_rgba(255,165,0,0.4)]',
-  'shadow-[0_0_15px_2px_rgba(255,20,147,0.4)]',
-  'shadow-[0_0_15px_2px_rgba(0,255,255,0.4)]',
-  'shadow-[0_0_15px_2px_rgba(255,0,255,0.4)]',
-  'shadow-[0_0_15px_2px_rgba(255,255,0,0.4)]'
-]
-const text = [
-  'text-[rgba(255,0,0,0.8)]',
-  'text-[rgba(0,0,255,0.8)]',
-  'text-[rgba(0,255,0,0.8)]',
-  'text-[rgba(255,165,0,0.8)]',
-  'text-[rgba(255,20,147,0.8)]',
-  'text-[rgba(0,255,255,0.8)]',
-  'text-[rgba(255,0,255,0.6)]',
-  'text-[rgba(255,255,0,0.8)]'
-]
-
 export default function Home() {
-  const { data: location } = useSwr(['Locations/'], () => getLocation())
+  // useSwr برای هر سنسور و لوکیشن
+  const locationSwr = useSwr('Location', () => getLocation())
+
+  const sensorData = sensors.map(sensor =>
+    useSwr(`${sensor.label}/${sensor.id}`, () => sensor.fetcher(sensor.id))
+  )
+
+  const location = locationSwr.data
 
   return (
     <section className='w-full h-full flex justify-center items-center max-tablet:p-10'>
-      {/* مستطیل بزرگ شامل 8 سنسور */}
       <div className='w-full max-w-3xl grid grid-cols-2 gap-12 max-tablet:gap-4'>
         {sensors.map((sensor, idx) => {
-          const { data } = useSwr([`${sensor.label}/${sensor.id}`], () =>
-            sensor.fetcher(sensor.id)
-          )
+          const data = sensorData[idx].data
 
           return (
             <div
@@ -58,17 +63,14 @@ export default function Home() {
               {data == null ? (
                 <p>Loading...</p>
               ) : (
-                <>
-                  <p
-                    className={`font-semibold ${text[idx]} drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]`}
-                  >
-                    {sensor.label} :
-                    <span className='ps-3 text-lg text-white'>
-                      {data?.data} {sensor.unit}
-                    </span>
-                  </p>
-                </>
+                <p className={`font-semibold ${textColors[idx]}`}>
+                  {sensor.label}:{' '}
+                  <span className='text-lg text-white'>
+                    {data?.data} {sensor.unit}
+                  </span>
+                </p>
               )}
+
               {location ? (
                 <p className='text-sm text-gray-400'>
                   X: {location?.data?.at(0)} | Y: {location?.data?.at(1)}
