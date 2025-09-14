@@ -1,11 +1,11 @@
 import { Api, baseUrl } from '..'
 
-export interface GetHumidityResponse {
-  value: Value[]
+export interface GetGasResponse {
+  value: GasValue[]
   '@iot.nextLink': string
 }
 
-export interface Value {
+export interface GasValue {
   '@iot.selfLink': string
   '@iot.id': number
   phenomenonTime: string
@@ -15,13 +15,13 @@ export interface Value {
   'FeatureOfInterest@iot.navigationLink': string
 }
 
-export const getHumidity = async (id: number) => {
+export const getGas = async (id: number) => {
   const username = 'admin'
   const password = 'admin'
   const basicAuth = 'Basic ' + btoa(`${username}:${password}`)
 
   try {
-    const res = await Api<GetHumidityResponse>(
+    const res = await Api<GetGasResponse>(
       `${baseUrl}/Datastreams(${id})/Observations?$orderby=phenomenonTime desc&$top=1`,
       {
         headers: {

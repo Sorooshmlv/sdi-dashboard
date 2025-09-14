@@ -1,11 +1,11 @@
 import { Api, baseUrl } from '..'
 
-export interface GetObservationResponse {
-  value: Value[]
+export interface GetLightResponse {
+  value: LightValue[]
   '@iot.nextLink': string
 }
 
-export interface Value {
+export interface LightValue {
   '@iot.selfLink': string
   '@iot.id': number
   phenomenonTime: string
@@ -15,14 +15,14 @@ export interface Value {
   'FeatureOfInterest@iot.navigationLink': string
 }
 
-export const getObservation = async () => {
+export const getLight = async (id: number) => {
   const username = 'admin'
   const password = 'admin'
   const basicAuth = 'Basic ' + btoa(`${username}:${password}`)
 
   try {
-    const res = await Api<GetObservationResponse>(
-      `${baseUrl}/Datastreams(3)/Observations?$orderby=phenomenonTime desc&$top=1`,
+    const res = await Api<GetLightResponse>(
+      `${baseUrl}/Datastreams(${id})/Observations?$orderby=phenomenonTime desc&$top=1`,
       {
         headers: {
           Authorization: basicAuth

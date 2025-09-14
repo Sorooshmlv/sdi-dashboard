@@ -1,6 +1,6 @@
 import { Api, baseUrl } from '..'
 
-export interface GetHumidityResponse {
+export interface GetTemperatureResponse {
   value: Value[]
   '@iot.nextLink': string
 }
@@ -15,13 +15,13 @@ export interface Value {
   'FeatureOfInterest@iot.navigationLink': string
 }
 
-export const getHumidity = async (id: number) => {
+export const getTemperature = async (id: number) => {
   const username = 'admin'
   const password = 'admin'
   const basicAuth = 'Basic ' + btoa(`${username}:${password}`)
 
   try {
-    const res = await Api<GetHumidityResponse>(
+    const res = await Api<GetTemperatureResponse>(
       `${baseUrl}/Datastreams(${id})/Observations?$orderby=phenomenonTime desc&$top=1`,
       {
         headers: {
