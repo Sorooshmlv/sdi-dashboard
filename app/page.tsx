@@ -1,10 +1,10 @@
 'use client'
 import useSwr from 'swr'
-import { getTemperature } from './api/Temperature'
-import { getLocation } from './api/Location'
-import { getHumidity } from './api/Humidity'
-import { getLight } from './api/Light'
-import { getGas } from './api/Gas'
+import { getTemperature } from './api/Temperature/index'
+import { getLocation } from './api/Location/index'
+import { getHumidity } from './api/Humidity/index'
+import { getLight } from './api/Light/index'
+import { getGas } from './api/Gas/index'
 
 const sensors = [
   { label: 'Temperature 1', fetcher: getTemperature, id: 3, unit: '°C' },
