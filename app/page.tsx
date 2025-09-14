@@ -13,8 +13,8 @@ const shadows = [
   'shadow-[0_0_15px_2px_rgba(255,165,0,0.4)]',
   'shadow-[0_0_15px_2px_rgba(255,20,147,0.4)]',
   'shadow-[0_0_15px_2px_rgba(0,255,255,0.4)]',
-  'shadow-[0_0_15px_2px_rgba(75,0,130,0.4)]', // بنفش اصلاح شده
-  'shadow-[0_0_15px_2px_rgba(255,255,0,0.4)]'
+  'shadow-[0_0_15px_2px_rgba(255,255,0,0.4)]',
+  'shadow-[0_0_15px_2px_rgba(255,0,255,0.4)]'
 ]
 
 const textColors = [
@@ -24,8 +24,8 @@ const textColors = [
   'text-[rgba(255,165,0,0.6)]',
   'text-[rgba(255,20,147,0.6)]',
   'text-[rgba(0,255,255,0.6)]',
-  'text-[rgba(75,0,130,0.6)]', // بنفش اصلاح شده
-  'text-[rgba(255,255,0,0.6)]'
+  'text-[rgba(255,255,0,0.6)]',
+  'text-[rgba(255,0,255,0.6)]'
 ]
 
 const sensors = [
@@ -40,14 +40,11 @@ const sensors = [
 ]
 
 export default function Home() {
-  // useSwr برای هر سنسور و لوکیشن
   const locationSwr = useSwr('Location', () => getLocation())
-
+  const location = locationSwr.data
   const sensorData = sensors.map(sensor =>
     useSwr(`${sensor.label}/${sensor.id}`, () => sensor.fetcher(sensor.id))
   )
-
-  const location = locationSwr.data
 
   return (
     <section className='w-full h-full flex justify-center items-center max-tablet:p-10'>
