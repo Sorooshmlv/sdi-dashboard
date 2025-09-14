@@ -36,5 +36,29 @@ export default {
       }
     }
   },
+  safelist: [
+    // Shadows
+    'shadow-[0_0_15px_2px_rgba(255,0,0,0.7)]',
+    'shadow-[0_0_15px_2px_rgba(0,0,255,0.7)]',
+    'shadow-[0_0_15px_2px_rgba(0,255,0,0.7)]',
+    'shadow-[0_0_15px_2px_rgba(255,165,0,0.7)]',
+    'shadow-[0_0_15px_2px_rgba(255,20,147,0.7)]',
+    'shadow-[0_0_15px_2px_rgba(0,255,255,0.7)]',
+    'shadow-[0_0_15px_2px_rgba(153,255,51,0.7)]',
+    'shadow-[0_0_15px_2px_rgba(255,255,0,0.7)]',
+    'shadow-[0_0_15px_2px_rgba(255,0,255,0.7)]',
+
+    // Text
+    'text-[rgba(255,0,0,0.8)]',
+    'text-[rgba(0,0,255,0.8)]',
+    'text-[rgba(0,255,0,0.8)]',
+    'text-[rgba(255,165,0,0.8)]',
+    'text-[rgba(255,20,147,0.8)]',
+    'text-[rgba(0,255,255,0.8)]',
+    'text-[rgba(153,255,51,0.8)]',
+    'text-[rgba(255,255,0,0.8)]',
+    'text-[rgba(255,0,255,0.8)]'
+  ],
+
   plugins: []
 } satisfies Config
