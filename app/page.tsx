@@ -12,20 +12,20 @@ export default function Home() {
   const { data: location } = useSwr('location', () => getLocation())
 
   // Temperature
-  const { data: temp1 } = useSwr('Temperature1/3', () => getTemperature(3))
-  const { data: temp2 } = useSwr('Temperature2/5', () => getTemperature(5))
+  const { data: temp1 } = useSwr('Temperature1/3', () => getTemperature(12))
+  const { data: temp2 } = useSwr('Temperature2/5', () => getTemperature(13))
 
   // Humidity
-  const { data: hum1 } = useSwr('Humidity1/4', () => getHumidity(4))
-  const { data: hum2 } = useSwr('Humidity2/6', () => getHumidity(6))
+  const { data: hum1 } = useSwr('Humidity1/4', () => getHumidity(14))
+  const { data: hum2 } = useSwr('Humidity2/6', () => getHumidity(15))
 
   // Light
-  const { data: light1 } = useSwr('Light1/7', () => getLight(7))
-  const { data: light2 } = useSwr('Light2/9', () => getLight(9))
+  const { data: light1 } = useSwr('Light1/7', () => getLight(16))
+  const { data: light2 } = useSwr('Light2/9', () => getLight(17))
 
   // Gas
-  const { data: gas1 } = useSwr('Gas1/8', () => getGas(8))
-  const { data: gas2 } = useSwr('Gas2/10', () => getGas(10))
+  const { data: gas1 } = useSwr('Gas1/8', () => getGas(18))
+  const { data: gas2 } = useSwr('Gas2/10', () => getGas(19))
 
   const sensors = [
     {
